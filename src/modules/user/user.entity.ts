@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
-import { RoleEntity } from "../role/entities/role.entity";
+import { Exclude } from "class-transformer";
+import { RoleEntity } from "../role/entitys/role.entity";
 
 @Entity("user")
 export class UserEntity extends BaseEntity {
@@ -14,6 +15,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({ type: "varchar" })
   @ApiProperty({ description: "密码", type: String })
+  @Exclude()
   password: string;
 
   @Column({ type: "varchar", nullable: true })

@@ -11,6 +11,13 @@ redis:
   password: root
   db: 0
   keyPrefix: "nest:"
+email:
+  host: smtp.126.com
+  port: 465
+  secure: true
+  auth:
+    user: spq133@126.com
+    pass: XRWcfUbu2gdp8Ybz
 strategy:
   github:
     clientID: Iv23lieiXSTBVrHUxr0y

@@ -16,6 +16,7 @@ import { RoleModule } from "./modules/role/role.module";
 import { PermissionModule } from "./modules/permission/permission.module";
 import { LoginGuard } from "./guard/login.guard";
 import { JwtModule } from "@nestjs/jwt";
+import { EmailModule } from "./modules/email/email.module";
 
 @Module({
   imports: [
@@ -42,7 +43,8 @@ import { JwtModule } from "@nestjs/jwt";
     UploadModule,
     AuthModule,
     RoleModule,
-    PermissionModule
+    PermissionModule,
+    EmailModule
   ],
   providers: [
     {

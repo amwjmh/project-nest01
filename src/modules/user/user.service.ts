@@ -1,6 +1,7 @@
 import { Injectable, Body } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
+import { instanceToPlain } from "class-transformer";
 import * as dayjs from "dayjs";
 import * as crypto from "crypto";
 import { UserEntity } from "./user.entity";
@@ -87,11 +88,7 @@ export class UserService {
       take: listDto.pageSize,
       order: { createTime: "DESC" }
     });
-    const list = result.map((user) => ({
-      ...user,
-      createTime: dayjs(user.createTime).format("YYYY-MM-DD HH:mm:ss")
-    }));
-    return { list, total };
+    return { list: instanceToPlain(result), total };
   }
 
   async edit(user: EditDto) {

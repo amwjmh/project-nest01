@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { WinstonLogger } from "./common/logger/logger.service";
@@ -13,12 +14,19 @@ async function bootstrap() {
   app.useLogger(winstonLogger);
   winstonLogger.log("Nest-Admin is running on port 3000");
 
-  const swaggerOptions = new DocumentBuilder().setTitle("Nest-Admin");
+  const swaggerOptions = new DocumentBuilder().setTitle("Nest-Admin").addBearerAuth({
+    type: "http",
+    name: "bearer",
+    description: "JWT token"
+  });
   const document = SwaggerModule.createDocument(app, swaggerOptions.build());
   SwaggerModule.setup("/swagger-ui", app, document);
 
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true
+  }));
 
   await app.listen(3000);
 

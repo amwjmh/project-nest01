@@ -30,6 +30,17 @@ export class AppConfigService {
       keyPrefix: this.get("redis.keyPrefix")
     };
   }
+  get emailConfig() {
+    return {
+      host: this.get("email.host"),
+      port: this.get("email.port"),
+      secure: this.get("email.secure"),
+      auth: {
+        user: this.get("email.auth.user"),
+        pass: this.get("email.auth.pass")
+      }
+    };
+  }
   private get<T = string>(key: string): T {
     const value = this.configService.get<T>(key);
      if (isNil(value)) {
