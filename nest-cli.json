@@ -6,12 +6,12 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "assets/bootstrap.yaml",
+        "include": "config/bootstrap.yaml",
         "outDir": "dist",
         "watchAssets": true
       },
       {
-        "include": "assets/bootstrap-development.yaml",
+        "include": "config/bootstrap-development.yaml",
         "outDir": "dist",
         "watchAssets": true
       }

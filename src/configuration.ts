@@ -8,11 +8,12 @@ const YAML_CONFIG_SUFFIX = "yaml";
 
 export default () => {
   let config: Record<string, any> = null;
-  const configPath = path.resolve(__dirname, "assets", `${YAML_CONFIG_FILENAME}.${YAML_CONFIG_SUFFIX}`);
+  const configPath = path.resolve(__dirname, "config", `${YAML_CONFIG_FILENAME}.${YAML_CONFIG_SUFFIX}`);
+  console.log(configPath);
   if (existsSync(configPath)) {
     config = yaml.load(readFileSync(configPath, "utf-8"));
   }
-  const evnConfigPath = path.resolve(__dirname, "assets", `${YAML_CONFIG_FILENAME}-${process.env.NODE_ENV}.${YAML_CONFIG_SUFFIX}`);
+  const evnConfigPath = path.resolve(__dirname, "config", `${YAML_CONFIG_FILENAME}-${process.env.NODE_ENV}.${YAML_CONFIG_SUFFIX}`);
   if (existsSync(evnConfigPath)) {
     merge(config, yaml.load(readFileSync(evnConfigPath, "utf-8")));
   }
