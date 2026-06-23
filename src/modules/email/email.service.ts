@@ -2,12 +2,14 @@ import { Injectable, Inject } from "@nestjs/common";
 import { Transporter } from "nodemailer";
 import { CreateEmailDto } from "./dto/create-email.dto";
 import { AppConfigService } from "../../shared/services/app-config.service";
+import { WinstonLogger } from "../../common/logger/logger.service";
 
 @Injectable()
 export class EmailService {
   constructor(
     @Inject("MAIL_TRANSPORTER") private readonly transporter: Transporter,
-    private readonly appConfig: AppConfigService
+    private readonly appConfig: AppConfigService,
+    private readonly logger: WinstonLogger
   ) {}
 
   async send(dto: CreateEmailDto) {

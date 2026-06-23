@@ -8,7 +8,7 @@ export class CreateEmailDto {
   to: string;
 
   @ApiProperty({ description: "邮件主题" })
-  @IsNotEmpty({ message: "邮件主题不能为空" })
+  @IsOptional()
   @IsString({ message: "邮件主题必须是字符串" })
   subject: string;
 

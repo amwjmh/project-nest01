@@ -8,11 +8,14 @@
   import { ApiResponse } from "../../common/api-response";
   import { UserService } from "../user/user.service";
   import { UserEntity } from "../user/user.entity";
+  import { EmailService } from "../email/email.service";
+  import { CreateEmailDto } from "../email/dto/create-email.dto";
+  import { LoginByEmailDto } from "./dto/login-by-email.dto";
 
   @ApiTags("认证")
   @Controller("api/auth")
   export class AutoController {
-    constructor(private authService: AuthService, private jwtService: JwtService) {};
+    constructor(private authService: AuthService, private jwtService: JwtService, private emailService: EmailService) {};
 
     @Inject(UserService)
     userService: UserService;
@@ -93,6 +96,37 @@
             userName: payload.userName
         }, { expiresIn: "30s" });
         return { token, refresh_token };
+      } catch (error) {
+        return ApiResponse.fail(error.message);
+      }
+    }
+
+    @Post("email-code")
+    @ApiOperation({ summary: "发送邮件验证码" })
+    @ApiBody({ type: CreateEmailDto })
+    async sendEmail(@Body() dto: CreateEmailDto) {
+      try {
+        const result = await this.authService.sendEmail(dto);
+        return ApiResponse.ok(true);
+      } catch (error) {
+        return ApiResponse.fail(error.message);
+      }
+    }
+    @Post("loginbyemail")
+    @ApiOperation({ summary: "邮件登录" })
+    @ApiBody({ type: LoginByEmailDto })
+    async loginByEmail(@Body() dto: LoginByEmailDto) {
+      try {
+        const user = await this.authService.loginByEmail(dto);
+        const token = await this.jwtService.signAsync({
+            userId: user.id,
+            userName: user.userName
+        }, { expiresIn: "30s" });
+        const refresh_token = await this.jwtService.signAsync({
+            userId: user.id,
+            userName: user.userName
+        }, { expiresIn: "1d" });
+        return ApiResponse.ok({ token, refresh_token });
       } catch (error) {
         return ApiResponse.fail(error.message);
       }
