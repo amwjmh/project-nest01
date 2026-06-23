@@ -8,7 +8,7 @@ import { SharedModule } from "./shared/shared.module";
 import { DepartmentModule } from "./modules/department/department.module";
 import { UploadModule } from "./modules/upload/upload.module";
 import { LoggerModule } from "./common/logger/logger.module";
-import { LoggingInterceptor } from "./common/interceptors/loging.interceptor";
+import { LoggingInterceptor } from "./interceptors/loging.interceptor";
 import { APP_INTERCEPTOR, APP_GUARD } from "@nestjs/core";
 import { RedisModule } from "./common/redis/redis.module";
 import { AuthModule } from "./modules/auth/auth.module";

@@ -1,6 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { Observable, tap } from "rxjs";
-import { WinstonLogger } from "../logger/logger.service";
+import { WinstonLogger } from "../common/logger/logger.service";
 import * as dayjs from "dayjs";
 
 @Injectable()
