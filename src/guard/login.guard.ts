@@ -15,7 +15,6 @@ export class LoginGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const authorization = request.headers.authorization;
-    console.log(this.reflector);
     const requireLogin = this.reflector.getAllAndOverride("requireLogin", [context.getClass(), context.getHandler()]);
     if (!requireLogin) return true;
     const path = request.route?.path;
