@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ScheduleModule } from "@nestjs/schedule";
 import { UserModule } from "./modules/user/user.module";
 import { ConfigModule } from "@nestjs/config";
 import configuration from "./configuration";
@@ -14,9 +15,11 @@ import { RedisModule } from "./common/redis/redis.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { RoleModule } from "./modules/role/role.module";
 import { PermissionModule } from "./modules/permission/permission.module";
-import { LoginGuard } from "./guard/login.guard";
 import { JwtModule } from "@nestjs/jwt";
 import { EmailModule } from "./modules/email/email.module";
+import { TasksModule } from "./modules/tasks/tasks.module";
+import { OpenaiModule } from "./modules/openai/openai.module";
+import { ToolModule } from './modules/tool/tool.module';
 
 @Module({
   imports: [
@@ -36,6 +39,7 @@ import { EmailModule } from "./modules/email/email.module";
       global: true,
       secret: "guang", signOptions: { expiresIn: "1d" }
     }),
+    ScheduleModule.forRoot(),
     LoggerModule,
     RedisModule,
     UserModule,
@@ -44,7 +48,10 @@ import { EmailModule } from "./modules/email/email.module";
     AuthModule,
     RoleModule,
     PermissionModule,
-    EmailModule
+    EmailModule,
+    TasksModule,
+    OpenaiModule,
+    ToolModule
   ],
   providers: [
     {

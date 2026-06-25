@@ -12,7 +12,7 @@ async function bootstrap() {
   });
   const winstonLogger = app.get<WinstonLogger>(WinstonLogger);
   app.useLogger(winstonLogger);
-  winstonLogger.log("Nest-Admin is running on port 3000");
+  winstonLogger.log("Nest-admin正在端口3000上运行");
 
   const swaggerOptions = new DocumentBuilder().setTitle("Nest-Admin").addBearerAuth({
     type: "http",
