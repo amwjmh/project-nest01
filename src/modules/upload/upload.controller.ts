@@ -1,29 +1,38 @@
-import { Controller, Post, UploadedFile, UploadedFiles, UseInterceptors, UsePipes } from "@nestjs/common";
+import { Controller, Get, Inject, Query, Post, Body, Param } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiConsumes } from "@nestjs/swagger";
-import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { UploadService } from "./upload.service";
-import { FileSizeValidationPipe } from "../../pipes/file-size.pipe";
+import * as MinioClient from "minio";
+import { CompleteDto } from "./dto/complete.dto";
 
 @ApiTags("文件上传")
-@Controller("upload")
+@Controller("api/upload")
 export class UploadController {
   constructor(private uploadService: UploadService) {}
 
-  @Post("single")
-  @ApiOperation({ summary: "单文件上传" })
-  @ApiConsumes("multipart/form-data")
-  @UseInterceptors(FileInterceptor("file"))
-  @UsePipes(new FileSizeValidationPipe(5 * 1024 * 1024))
-  async uploadSingleFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
-    return this.uploadService.uploadFile(file);
+  @Inject("MINIO_CLIENT")
+  private minioClient: MinioClient.Client;
+
+  @Get("presignedUrl")
+  @ApiOperation({ summary: "获取文件上传URL" })
+  async presignedUrl(@Query("name") name: string) {
+    return this.uploadService.createPresignedUrl(name);
   }
 
-  @Post("multiple")
-  @ApiOperation({ summary: "多文件上传" })
-  @ApiConsumes("multipart/form-data")
-  @UseInterceptors(FilesInterceptor("files"))
-  async uploadMultipleFiles(@UploadedFiles() files: Express.Multer.File[]) {
-    return this.uploadService.uploadFiles(files);
+  @Post("complete")
+  @ApiOperation({ summary: "上传文件" })
+  async completeUpload(@Body() completeDto: CompleteDto) {
+    return this.uploadService.completeUpload(completeDto);
+  }
+
+  @Get("list")
+  @ApiOperation({ summary: "获取文件列表" })
+  async getFileList() {
+    return this.uploadService.getFileList();
+  }
+
+  @Get("previewUrl/:filePath")
+  @ApiOperation({ summary: "获取文件预览URL" })
+  async previewUrl(@Param("filePath") filePath: string) {
+    return this.uploadService.previewUrl(filePath);
   }
 }

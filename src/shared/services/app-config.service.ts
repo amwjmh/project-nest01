@@ -4,6 +4,7 @@ import { Injectable } from "@nestjs/common";
 import { isNil } from "lodash";
 import { RedisOptions } from "ioredis";
 import { join } from "path";
+import * as MinioClient from "minio";
 @Injectable()
 export class AppConfigService {
   constructor(private configService: ConfigService) {
@@ -39,6 +40,15 @@ export class AppConfigService {
         user: this.get("email.auth.user"),
         pass: this.get("email.auth.pass")
       }
+    };
+  }
+  get minioConfig(): MinioClient.ClientOptions {
+    return {
+      endPoint: this.get("minio.endPoint"),
+      accessKey: this.get("minio.accessKey"),
+      secretKey: this.get("minio.secretKey"),
+      port: this.get("minio.port"),
+      useSSL: this.get("minio.useSSL")
     };
   }
   private get<T = string>(key: string): T {

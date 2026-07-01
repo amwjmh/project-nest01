@@ -19,7 +19,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { EmailModule } from "./modules/email/email.module";
 import { TasksModule } from "./modules/tasks/tasks.module";
 import { OpenaiModule } from "./modules/openai/openai.module";
-import { ToolModule } from './modules/tool/tool.module';
+import { ToolModule } from "./modules/tool/tool.module";
 
 @Module({
   imports: [

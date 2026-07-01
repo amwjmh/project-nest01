@@ -3,6 +3,19 @@ import { ConfigService } from "@nestjs/config";
 import * as DailyRotateFile from "winston-daily-rotate-file";
 import * as chalk from "chalk";
 
+const getLevelColorStr = (level: string) => {
+  switch (level) {
+    case "info":
+      return chalk.blue(`${level}`);
+    case "warn":
+      return chalk.yellow(`${level}`);
+    case "error":
+      return chalk.red(`${level}`);
+    default:
+      return chalk.white(`${level}`);
+  }
+};
+
 export const createWinstonLogger = (configService: ConfigService) => {
   const isProduction = configService.get("NODE_ENV") === "production";
   const logLevel = configService.get("LOG_LEVEL", "info");
@@ -15,7 +28,13 @@ export const createWinstonLogger = (configService: ConfigService) => {
       isProduction ? winston.format.json() : winston.format.printf(({ level, context, message, time }) => {
         const appStr = chalk.green(`[NEST]`);
         const contextStr = chalk.yellow(`[${context}]`);
-        return `${appStr} ${level} ${time} ${contextStr} ${message}`;
+        const levelColor = {
+          info: chalk.blue,
+          warn: chalk.yellow,
+          error: chalk.red
+        };
+        const levelStr = getLevelColorStr(level);
+        return `${appStr} ${levelStr} ${time} ${contextStr} ${message}`;
       })
     ),
     transports: [

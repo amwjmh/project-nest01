@@ -22,4 +22,19 @@ export class ToolController {
         { headers: { "X-QW-Api-Key": "8f3068cb7e2244c3b128cf93ec21cf10" } }));
     return response.data;
   }
+
+  @Get("sysinfo")
+  @ApiOperation({ summary: "获取系统信息" })
+  async getSysInfo() {
+    const sysInfo = this.toolService.getSysInfo();
+    const cpuInfo = this.toolService.getCpuInfo();
+    const memInfo = this.toolService.getMemInfo();
+    const diskInfo = await this.toolService.getDiskInfo();
+    return {
+      sys: sysInfo,
+      cpu: cpuInfo,
+      mem: memInfo,
+      disk: diskInfo
+    };
+  }
 }
