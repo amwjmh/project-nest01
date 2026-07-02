@@ -1,6 +1,8 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 import { PermissionEntity } from "../../permission/entities/permission.entity";
+import * as dayjs from "dayjs";
 
 @Entity("role")
 export class RoleEntity extends BaseEntity {
@@ -20,11 +22,12 @@ export class RoleEntity extends BaseEntity {
   @ApiProperty({ description: "描述", type: String })
   desc: string;
 
-  @CreateDateColumn({ type: "timestamp" })
+  @CreateDateColumn({ type: "datetime" })
   @ApiProperty({ description: "创建时间", type: Date })
+  @Transform(({ value }) => dayjs(value).format("YYYY-MM-DD HH:mm:ss"))
   createTime: Date;
 
-  @CreateDateColumn({ type: "timestamp" })
+  @UpdateDateColumn({ type: "datetime" })
   @ApiProperty({ description: "更新时间", type: Date })
   updateTime: Date;
 
