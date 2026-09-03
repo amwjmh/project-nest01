@@ -23,6 +23,10 @@ import { ToolModule } from "./modules/tool/tool.module";
 import { MeetingRoomModule } from "./modules/meeting-room/meeting-room.module";
 import { MeetingRoomBookingsModule } from "./modules/meeting-room-bookings/meeting-room-bookings.module";
 import { LoginGuard } from "./guard/login.guard";
+import { RecipeModule } from "./modules/recipe/recipe.module";
+import { SeasoningModule } from "./modules/seasoning/seasoning.module";
+import { RecipeStepModule } from "./modules/recipe_step/recipe_step.module";
+import { IngredientModule } from "./modules/ingredient/ingredient.module";
 
 @Module({
   imports: [
@@ -46,17 +50,21 @@ import { LoginGuard } from "./guard/login.guard";
     LoggerModule,
     RedisModule,
     UserModule,
-    DepartmentModule,
-    UploadModule,
+    // DepartmentModule,
+    // UploadModule,
     AuthModule,
-    RoleModule,
-    PermissionModule,
+    // RoleModule,
+    // PermissionModule,
     EmailModule,
-    TasksModule,
-    OpenaiModule,
-    ToolModule,
-    MeetingRoomModule,
-    MeetingRoomBookingsModule
+    // TasksModule,
+    // OpenaiModule,
+    // ToolModule,
+    // MeetingRoomModule,
+    // MeetingRoomBookingsModule,
+    RecipeModule,
+    IngredientModule,
+    RecipeStepModule,
+    SeasoningModule
   ],
   providers: [
     {

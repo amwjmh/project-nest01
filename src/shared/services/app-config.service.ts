@@ -19,7 +19,7 @@ export class AppConfigService {
       database: this.get("db.database"),
       entities: [join(__dirname, "..", "..", "modules", "**", "*.entity{.ts,.js}")],
       logging: true,
-      synchronize: true
+      synchronize: false
     };
   }
   get redisConfig() : RedisOptions {
