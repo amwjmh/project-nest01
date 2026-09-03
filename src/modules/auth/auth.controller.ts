@@ -25,17 +25,17 @@
     @ApiBody({ type: LoginDto })
     @UseGuards(AuthGuard("local"))
     async login(@Req() req: Request & { user: UserEntity }) {
-      console.log(req.user);
       const user = req.user;
       const token = await this.jwtService.signAsync({
           userId: user.id,
           userName: user.userName
-      }, { expiresIn: "30s" });
+      }, { expiresIn: "1h" });
       const refresh_token = await this.jwtService.signAsync({
           userId: user.id,
           userName: user.userName
       }, { expiresIn: "30s" });
-      return { token, refresh_token };
+      await this.authService.cacheUserInfo(token, user, 30 * 60);
+      return ApiResponse.ok({ token, refresh_token });
     }
 
     @Get("/github/login")
@@ -56,7 +56,8 @@
           userId: user.id,
           userName: user.userName
       }, { expiresIn: "1d" });
-      return { token, refresh_token };
+      await this.authService.cacheUserInfo(token, user, 30);
+      return ApiResponse.ok({ token, refresh_token });
     }
 
     @Post("register")
@@ -95,7 +96,8 @@
             userId: payload.userId,
             userName: payload.userName
         }, { expiresIn: "30s" });
-        return { token, refresh_token };
+        await this.authService.cacheUserInfo(token, user, 30);
+        return ApiResponse.ok({ token, refresh_token });
       } catch (error) {
         return ApiResponse.fail(error.message);
       }
@@ -126,9 +128,22 @@
             userId: user.id,
             userName: user.userName
         }, { expiresIn: "1d" });
+        await this.authService.cacheUserInfo(token, user, 30);
         return ApiResponse.ok({ token, refresh_token });
       } catch (error) {
         return ApiResponse.fail(error.message);
       }
+    }
+
+    @Post("logout")
+    @ApiOperation({ summary: "登出" })
+    @UseGuards(AuthGuard("jwt"))
+    async logout(@Req() req: Request & { headers: { authorization?: string } }) {
+      const authHeader = req.headers.authorization;
+      if (authHeader) {
+        const token = authHeader.replace("Bearer ", "");
+        await this.authService.removeUserCache(token);
+      }
+      return ApiResponse.ok(null, "已登出");
     }
   }

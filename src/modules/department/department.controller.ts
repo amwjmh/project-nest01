@@ -2,12 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/commo
 import { DepartmentService } from "./department.service";
 import { CreateDepartmentDto } from "./dto/create-department.dto";
 import { UpdateDepartmentDto } from "./dto/update-department.dto";
+import { ApiTags, ApiOperation } from "@nestjs/swagger";
 
+@ApiTags("部门")
 @Controller("department")
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) { }
 
   @Post("/create")
+  @ApiOperation({ summary: "创建部门" })
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
     const a = 10 / 0;
     return this.departmentService.create(createDepartmentDto);

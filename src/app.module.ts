@@ -20,6 +20,9 @@ import { EmailModule } from "./modules/email/email.module";
 import { TasksModule } from "./modules/tasks/tasks.module";
 import { OpenaiModule } from "./modules/openai/openai.module";
 import { ToolModule } from "./modules/tool/tool.module";
+import { MeetingRoomModule } from "./modules/meeting-room/meeting-room.module";
+import { MeetingRoomBookingsModule } from "./modules/meeting-room-bookings/meeting-room-bookings.module";
+import { LoginGuard } from "./guard/login.guard";
 
 @Module({
   imports: [
@@ -51,17 +54,19 @@ import { ToolModule } from "./modules/tool/tool.module";
     EmailModule,
     TasksModule,
     OpenaiModule,
-    ToolModule
+    ToolModule,
+    MeetingRoomModule,
+    MeetingRoomBookingsModule
   ],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor
+    },
+    {
+      provide: APP_GUARD,
+      useClass: LoginGuard
     }
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: LoginGuard
-    // }
   ]
 })
 export class AppModule {}

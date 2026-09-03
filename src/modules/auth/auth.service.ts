@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { UserService } from "../user/user.service";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { UserRepository } from "../user/repository/user.repository";
@@ -8,6 +7,7 @@ import { CreateEmailDto } from "../email/dto/create-email.dto";
 import { WinstonLogger } from "../../common/logger/logger.service";
 import { RedisService } from "../../common/redis/redis.service";
 import { LoginByEmailDto } from "./dto/login-by-email.dto";
+import { UserEntity } from "../user/user.entity";
 import * as crypto from "crypto";
 
 function getEmailCode(code: string) {
@@ -107,10 +107,25 @@ export class AuthService {
         this.logger.error(`邮箱 ${dto.to} 不存在`, "AuthService");
         throw new Error("该邮箱不存在");
       }
-      const result = await await this.emailService.send(dto);
+      const result = await this.emailService.send(dto);
       this.redisService.set(dto.to, code, 30);
       this.logger.log(`用户邮箱 ${dto.to} 发送验证码成功`, "AuthService");
       return result;
     }
+  }
+
+  async cacheUserInfo(token: string, user: UserEntity, ttl: number) {
+    const userInfo = {
+      userId: String(user.id),
+      userName: user.userName,
+      email: user.email
+    };
+    await this.redisService.setObject(`token:${token}`, userInfo, ttl);
+    this.logger.log(`用户 ${user.userName} 信息已缓存到 Redis`, "AuthService");
+  }
+
+  async removeUserCache(token: string) {
+    await this.redisService.del(`token:${token}`);
+    this.logger.log(`已从 Redis 删除用户缓存`, "AuthService");
   }
 }
