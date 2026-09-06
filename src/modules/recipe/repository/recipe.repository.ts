@@ -28,7 +28,14 @@ export class RecipeRepository extends Repository<RecipeEntity> {
   }
 
   async findList(listDto: ListRecipeDto) {
-    const qb = this.createQueryBuilder("recipe").leftJoinAndSelect("recipe.steps", "steps");
+    const qb = this.createQueryBuilder("recipe")
+      .leftJoinAndSelect("recipe.steps", "steps")
+      .leftJoinAndSelect("recipe.recipeIngredients", "recipeIngredients")
+      .leftJoinAndSelect("recipeIngredients.ingredient", "ingredient")
+      .leftJoinAndSelect("recipe.recipeSeasonings", "recipeSeasonings")
+      .leftJoinAndSelect("recipeSeasonings.seasoning", "seasoning")
+      .leftJoinAndSelect("recipe.recipeSupplementarys", "recipeSupplementarys")
+      .leftJoinAndSelect("recipeSupplementarys.supplementary", "supplementary");
 
     if (listDto.name) {
       qb.andWhere("recipe.name LIKE :name", { name: `%${listDto.name}%` });

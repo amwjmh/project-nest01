@@ -1,21 +1,21 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ScheduleModule } from "@nestjs/schedule";
-import { UserModule } from "./modules/user/user.module";
-import { ConfigModule } from "@nestjs/config";
-import configuration from "./configuration";
-import { AppConfigService } from "./shared/services/app-config.service";
-import { SharedModule } from "./shared/shared.module";
-import { DepartmentModule } from "./modules/department/department.module";
-import { UploadModule } from "./modules/upload/upload.module";
-import { LoggerModule } from "./common/logger/logger.module";
-import { LoggingInterceptor } from "./interceptors/loging.interceptor";
-import { APP_INTERCEPTOR, APP_GUARD } from "@nestjs/core";
-import { RedisModule } from "./common/redis/redis.module";
-import { AuthModule } from "./modules/auth/auth.module";
-import { RoleModule } from "./modules/role/role.module";
-import { PermissionModule } from "./modules/permission/permission.module";
-import { JwtModule } from "@nestjs/jwt";
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
+import { UserModule } from './modules/user/user.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './configuration';
+import { AppConfigService } from './shared/services/app-config.service';
+import { SharedModule } from './shared/shared.module';
+import { DepartmentModule } from './modules/department/department.module';
+import { UploadModule } from './modules/upload/upload.module';
+import { LoggerModule } from './common/logger/logger.module';
+import { LoggingInterceptor } from './interceptors/loging.interceptor';
+import { APP_INTERCEPTOR, APP_GUARD } from '@nestjs/core';
+import { RedisModule } from './common/redis/redis.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
+import { PermissionModule } from './modules/permission/permission.module';
+import { JwtModule } from '@nestjs/jwt';
 import { EmailModule } from "./modules/email/email.module";
 import { TasksModule } from "./modules/tasks/tasks.module";
 import { OpenaiModule } from "./modules/openai/openai.module";
@@ -27,6 +27,7 @@ import { RecipeModule } from "./modules/recipe/recipe.module";
 import { SeasoningModule } from "./modules/seasoning/seasoning.module";
 import { RecipeStepModule } from "./modules/recipe_step/recipe_step.module";
 import { IngredientModule } from "./modules/ingredient/ingredient.module";
+import { SupplementaryModule } from "./modules/supplementary/supplementary.module";
 
 @Module({
   imports: [
@@ -51,7 +52,7 @@ import { IngredientModule } from "./modules/ingredient/ingredient.module";
     RedisModule,
     UserModule,
     // DepartmentModule,
-    // UploadModule,
+    UploadModule,
     AuthModule,
     // RoleModule,
     // PermissionModule,
@@ -64,7 +65,8 @@ import { IngredientModule } from "./modules/ingredient/ingredient.module";
     RecipeModule,
     IngredientModule,
     RecipeStepModule,
-    SeasoningModule
+    SeasoningModule,
+    SupplementaryModule
   ],
   providers: [
     {

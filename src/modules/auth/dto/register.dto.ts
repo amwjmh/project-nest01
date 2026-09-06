@@ -28,4 +28,11 @@ export class RegisterDto {
   @Min(0)
   @Max(1)
   gender: number;
+
+  @ApiProperty({ description: "邮箱验证码" })
+  @IsNotEmpty({ message: "验证码不能为空" })
+  @IsString()
+  @MinLength(6, { message: "验证码长度必须为6位" })
+  @MaxLength(6, { message: "验证码长度必须为6位" })
+  code: string;
 }

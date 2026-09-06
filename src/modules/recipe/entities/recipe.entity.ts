@@ -1,6 +1,9 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { RecipeStepEntity } from "../../recipe_step/entities/recipe_step.entity";
+import { RecipeIngredientEntity } from "./recipe_ingredient.entity";
+import { RecipeSeasoningEntity } from "./recipe_seasoning.entity";
+import { RecipeSupplementaryEntity } from "./recipe_supplementary.entity";
 
 @Entity("recipe")
 export class RecipeEntity extends BaseEntity {
@@ -43,4 +46,28 @@ export class RecipeEntity extends BaseEntity {
   @OneToMany(() => RecipeStepEntity, (step) => step.recipe)
   @ApiPropertyOptional({ description: "步骤列表", type: () => RecipeStepEntity, isArray: true })
   steps?: RecipeStepEntity[];
+
+  @OneToMany(() => RecipeIngredientEntity, (ri) => ri.recipe)
+  @ApiPropertyOptional({
+    description: "关联的食材列表",
+    type: () => RecipeIngredientEntity,
+    isArray: true
+  })
+  recipeIngredients?: RecipeIngredientEntity[];
+
+  @OneToMany(() => RecipeSeasoningEntity, (rs) => rs.recipe)
+  @ApiPropertyOptional({
+    description: "关联的调料列表",
+    type: () => RecipeSeasoningEntity,
+    isArray: true
+  })
+  recipeSeasonings?: RecipeSeasoningEntity[];
+
+  @OneToMany(() => RecipeSupplementaryEntity, (rsup) => rsup.recipe)
+  @ApiPropertyOptional({
+    description: "关联的辅料列表",
+    type: () => RecipeSupplementaryEntity,
+    isArray: true
+  })
+  recipeSupplementarys?: RecipeSupplementaryEntity[];
 }

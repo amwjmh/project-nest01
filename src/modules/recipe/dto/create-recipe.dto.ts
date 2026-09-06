@@ -6,10 +6,17 @@ import {
   IsOptional,
   MaxLength,
   Min,
-  IsIn
+  IsIn,
+  IsArray,
+  ValidateNested
 } from "class-validator";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
+import {
+  RecipeIngredientItemDto,
+  RecipeSeasoningItemDto,
+  RecipeSupplementaryItemDto
+} from "./recipe-association.dto";
 
 export class CreateRecipeDto {
   @ApiProperty({ description: "菜名" })
@@ -62,4 +69,37 @@ export class CreateRecipeDto {
   @IsString({ message: "效果图片URL必须是字符串" })
   @MaxLength(255, { message: "效果图片URL长度不能超过255" })
   effectImg?: string;
+
+  @ApiPropertyOptional({
+    description: "关联的食材列表",
+    type: () => RecipeIngredientItemDto,
+    isArray: true
+  })
+  @IsOptional()
+  @IsArray({ message: "食材列表必须是数组" })
+  @ValidateNested({ each: true })
+  @Type(() => RecipeIngredientItemDto)
+  ingredients?: RecipeIngredientItemDto[];
+
+  @ApiPropertyOptional({
+    description: "关联的调料列表",
+    type: () => RecipeSeasoningItemDto,
+    isArray: true
+  })
+  @IsOptional()
+  @IsArray({ message: "调料列表必须是数组" })
+  @ValidateNested({ each: true })
+  @Type(() => RecipeSeasoningItemDto)
+  seasonings?: RecipeSeasoningItemDto[];
+
+  @ApiPropertyOptional({
+    description: "关联的辅料列表",
+    type: () => RecipeSupplementaryItemDto,
+    isArray: true
+  })
+  @IsOptional()
+  @IsArray({ message: "辅料列表必须是数组" })
+  @ValidateNested({ each: true })
+  @Type(() => RecipeSupplementaryItemDto)
+  supplementarys?: RecipeSupplementaryItemDto[];
 }

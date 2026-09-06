@@ -9,7 +9,7 @@ import { ApiResponse } from "../../common/api-response";
 @ApiTags("食谱管理")
 @Controller("recipe")
 export class RecipeController {
-  constructor(private readonly recipeService: RecipeService) {}
+  constructor(private readonly recipeService: RecipeService) { }
 
   @Post("create")
   @ApiOperation({ summary: "创建食谱" })

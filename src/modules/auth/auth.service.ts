@@ -43,6 +43,22 @@ export class AuthService {
   ) {};
 
   async register (dto: RegisterDto) {
+    // 1. 校验邮箱验证码：检查缓存中是否存在且匹配（不存在即已过期）
+    const cachedCode = await this.redisService.get(dto.email);
+    if (!cachedCode) {
+      this.logger.error(`邮箱 ${dto.email} 验证码未发送或已过期`, "AuthService");
+      throw new UnauthorizedException("验证码失效");
+    }
+    if (cachedCode !== dto.code) {
+      this.logger.error(`邮箱 ${dto.email} 验证码错误`, "AuthService");
+      throw new UnauthorizedException("验证码错误");
+    }
+    // 2. 检查邮箱唯一性：确认数据库中不存在该邮箱
+    const existingEmailUser = await this.userRepository.findByEmail(dto.email);
+    if (existingEmailUser) {
+      this.logger.error(`邮箱 ${dto.email} 已注册`, "AuthService");
+      throw new Error("该邮箱已注册");
+    }
     const user = await this.userRepository.findByUsername(dto.userName);
     if (user) {
       this.logger.error(`用户 ${JSON.stringify(user)} 已注册`, "AuthService");
@@ -51,9 +67,12 @@ export class AuthService {
     const password = md5(dto.password);
     const newUser = await this.userRepository.create({
       userName: dto.userName,
+      email: dto.email,
       password
     });
     await this.userRepository.save(newUser);
+    // 验证码使用后立即清除，防止重复使用
+    await this.redisService.del(dto.email);
     this.logger.log(`新用户 ${newUser.email} 注册成功`, "AuthService");
     return newUser;
   };
@@ -102,11 +121,11 @@ export class AuthService {
       this.logger.error(`用户邮箱 ${dto.to} 已发送验证码`, "AuthService");
       throw new Error("该用户已发送验证码");
     } else {
-      const user = await this.userRepository.findByEmail(dto.to);
-      if (!user) {
-        this.logger.error(`邮箱 ${dto.to} 不存在`, "AuthService");
-        throw new Error("该邮箱不存在");
-      }
+      // const user = await this.userRepository.findByEmail(dto.to);
+      // if (!user) {
+      //   this.logger.error(`邮箱 ${dto.to} 不存在`, "AuthService");
+      //   throw new Error("该邮箱不存在");
+      // }
       const result = await this.emailService.send(dto);
       this.redisService.set(dto.to, code, 30);
       this.logger.log(`用户邮箱 ${dto.to} 发送验证码成功`, "AuthService");
