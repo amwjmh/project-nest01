@@ -3,5 +3,5 @@ db:
   port: 3306
   username: root
   password: root
-  database: nest
+  database: recipe
   logging: true
