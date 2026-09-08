@@ -14,7 +14,7 @@ export class OpenaiController {
   @Post("/chat")
   @ApiOperation({ summary: "与OpenAI模型对话" })
   @ApiBody({ schema: { properties: { message: { type: "string" } }, type: "object" } })
-  async chat(@Body() body: { message: string }) {
+  async chat(@Body() body: { message: string }): Promise<any> {
     return await this.chatModel.invoke(body.message);
   }
 }

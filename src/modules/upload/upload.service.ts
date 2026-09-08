@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import * as MinioClient from "minio";
 import { Inject } from "@nestjs/common";
 import * as dayjs from "dayjs";
-import * as uuid from "uuid";
+import * as crypto from "crypto";
 import { CompleteDto } from "./dto/complete.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -19,7 +19,7 @@ export class UploadService {
   ) {}
 
   async createPresignedUrl(name: string) {
-    const fileName = `/nest/${dayjs().format("YYYYMMDDHHmmss")}/${uuid.v4()}/${name}`;
+    const fileName = `/nest/${dayjs().format("YYYYMMDDHHmmss")}/${crypto.randomUUID()}/${name}`;
     const presignedUrl = await this.minioClient.presignedPutObject("nest", fileName, 180,);
     return { presignedUrl, filePath: fileName };
   }
