@@ -4,6 +4,7 @@ import { merge } from "lodash";
 import * as path from "path";
 import { DataSource } from "typeorm";
 import { join } from "path";
+import mysql2 from "mysql2";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config({ path: path.resolve(process.cwd(), ".env") });
 
@@ -26,6 +27,7 @@ const db = config.db ?? {};
 
 export default new DataSource({
   type: "mysql",
+  driver: mysql2,
   host: db.host,
   port: db.port,
   username: db.username,
