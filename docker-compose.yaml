@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NODE_ENV: development
+        NODE_ENV: production
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
     depends_on:
       - mysql-container
       - redis-container
@@ -35,4 +35,4 @@ services:
 networks:
   common-network:
     driver: bridge
-    name: common-nextwork
+    name: common-network

@@ -31,7 +31,7 @@ RUN npm install pm2 -g
 
 EXPOSE 3000
 
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=production
 
 CMD ["pm2-runtime", "main.js"]
 
