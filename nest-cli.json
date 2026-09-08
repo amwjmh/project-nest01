@@ -14,7 +14,13 @@
         "include": "config/bootstrap-development.yaml",
         "outDir": "dist",
         "watchAssets": true
+      },
+      {
+        "include": "config/bootstrap-production.yaml",
+        "outDir": "dist",
+        "watchAssets": true
       }
+      
     ]
   }
 }
