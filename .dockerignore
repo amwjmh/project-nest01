@@ -1,0 +1,11 @@
+node_modules
+dist
+logs
+.git
+.idea
+.vscode
+.DS_Store
+*.log
+.env
+.trae
+yarn-error.log
