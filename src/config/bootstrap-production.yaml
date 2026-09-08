@@ -5,3 +5,27 @@ db:
   password: root
   database: recipe
   logging: true
+redis:
+  host: redis-container
+  port: 6379
+  password: root
+  db: 0
+  keyPrefix: "nest:"
+email:
+  host: smtp.126.com
+  port: 465
+  secure: true
+  auth:
+    user: spq133@126.com
+    pass: XRWcfUbu2gdp8Ybz
+strategy:
+  github:
+    clientID: Iv23lieiXSTBVrHUxr0y
+    clientSecret: b897c5a821aabc9216f528f8a873ee96ac158d80
+    callbackURL: http://localhost:3000/api/auth/callback
+minio:
+  endPoint: localhost
+  accessKey: admin
+  secretKey: admin123
+  port: 9000
+  useSSL: false
