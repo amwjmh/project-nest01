@@ -8,11 +8,11 @@ COPY package.json .
 
 RUN npm config set registry https://registry.npmmirror.com
 
-RUN pnpm install
+RUN npm install
 
 COPY . .
 
-RUN pnpm run build
+RUN npm run build
 
 FROM node:18-alpine3.14 as runner-stage
 
@@ -23,11 +23,11 @@ ARG NODE_ENV
 
 WORKDIR /app
 
-RUN pnpm config set registry https://registry.npmmirror.com
+RUN npm config set registry https://registry.npmmirror.com
 
-RUN pnpm install
+RUN npm install
 
-RUN pnpm install pm2 -g
+RUN npm install pm2 -g
 
 EXPOSE 3000
 
