@@ -30,6 +30,18 @@ services:
       - /Users/hs/redis⁠:/data
     networks:
       - common-network
+  minio-container:
+    image: minio/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: admin123
+    volumes:
+      - /Users/hs/minio:/data
+    networks:
+      - common-network
 networks:
   common-network:
     driver: bridge
