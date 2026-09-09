@@ -18,6 +18,8 @@ services:
       MYSQL_DATABASE: recipe
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /Users/hs/mysql:/var/lib/mysql
     networks:
       - common-network
   redis-container:
