@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm config set registry https://registry.npmmirror.com
+RUN npm config set registry https://npm.aliyun.com
 
 RUN npm install
 
@@ -23,7 +23,7 @@ ARG NODE_ENV
 
 WORKDIR /app
 
-RUN npm config set registry https://registry.npmmirror.com
+RUN npm config set registry https://npm.aliyun.com
 
 RUN npm install
 
