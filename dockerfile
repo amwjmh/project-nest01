@@ -1,4 +1,4 @@
-FROM node:18-alpine3.14 as builder-stage
+FROM node:20-alpine3.14 as builder-stage
 
 ARG NODE_ENV
 
