@@ -16,9 +16,9 @@ function loadConfig(): Record<string, any> {
   if (existsSync(baseFile)) {
     config = yaml.load(readFileSync(baseFile, "utf-8")) as Record<string, any>;
   }
-  if (existsSync(envFile)) {
-    config = merge(config, yaml.load(readFileSync(envFile, "utf-8")) as Record<string, any>);
-  }
+  // if (existsSync(envFile)) {
+  //   config = merge(config, yaml.load(readFileSync(envFile, "utf-8")) as Record<string, any>);
+  // }
   return config ?? {};
 }
 
