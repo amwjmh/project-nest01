@@ -24,6 +24,10 @@ function loadConfig(): Record<string, any> {
 
 const config = loadConfig();
 const db = config.db ?? {};
+// 在服务器执行命令时打印 db 配置
+// 使用 stderr 输出，避免被 typeorm CLI 拦截 stdout 导致 ssh 终端无显示，同时脱敏敏感密码
+const safeDbConfig = { ...db, password: db.password ? "******" : undefined };
+console.error("db config (脱敏):", safeDbConfig);
 
 export default new DataSource({
   type: "mysql",
