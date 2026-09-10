@@ -11,7 +11,7 @@ require("dotenv").config({ path: path.resolve(process.cwd(), ".env") });
 function loadConfig(): Record<string, any> {
   const dir = path.resolve(__dirname, "config");
   const baseFile = path.join(dir, "bootstrap.yaml");
-  const envFile = path.join(dir, `bootstrap-${process.env.NODE_ENV ?? "development"}.yaml`);
+  const envFile = path.join(dir, `bootstrap-production.yaml`);
   let config: Record<string, any> = null;
   if (existsSync(baseFile)) {
     config = yaml.load(readFileSync(baseFile, "utf-8")) as Record<string, any>;
