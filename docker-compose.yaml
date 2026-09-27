@@ -31,7 +31,7 @@ services:
     networks:
       - common-network
   minio-container:
-    image: minio/minio
+    image: quay.io/minio/minio
     container_name: minio-container
     command: server /data --console-address ":9001"
     ports:
