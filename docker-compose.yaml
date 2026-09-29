@@ -16,10 +16,9 @@ services:
       - 3306:3306 
     environment:
       MYSQL_DATABASE: recipe
-      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - /Users/hs/mysql:/var/lib/mysql
+      - /var/lib/mysql:/var/lib/mysql
     networks:
       - common-network
   redis-container:
@@ -27,7 +26,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /Users/hs/redis⁠:/data
+      - /var/lib/redis:/data
     networks:
       - common-network
   minio-container:
@@ -41,7 +40,7 @@ services:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: admin123
     volumes:
-      - /Users/hs/minio/data:/data
+      - /var/lib/minio:/data
     networks:
       - common-network
 networks:
