@@ -1,7 +1,13 @@
 db:
-  host: localhost
+  host: 134.175.131.229
   port: 3306
   username: root
   password: root
   database: recipe
   logging: true
+minio:
+  endPoint: 134.175.131.229
+  accessKey: admin
+  secretKey: admin123
+  port: 9000
+  useSSL: false

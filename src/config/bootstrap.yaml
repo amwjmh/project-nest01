@@ -2,11 +2,11 @@ db:
   host: localhost
   port: 3306
   username: root
-  password: root
+  password: amwjmh0327
   database: recipe
   logging: true
 redis:
-  host: localhost
+  host: 134.175.131.229
   port: 6379
   password: root
   db: 0
@@ -26,6 +26,7 @@ strategy:
 minio:
   endPoint: localhost
   accessKey: admin
-  secretKey: admin123
+  secretKey: amwjmh0327
   port: 9000
   useSSL: false
+  bucketName: recipe
