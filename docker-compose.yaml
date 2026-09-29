@@ -16,7 +16,7 @@ services:
       - 3306:3306 
     environment:
       MYSQL_DATABASE: recipe
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: amwjmh0327
     volumes:
       - /var/lib/mysql:/var/lib/mysql
     networks:
@@ -38,7 +38,7 @@ services:
       - 9001:9001
     environment:
       MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: admin123
+      MINIO_ROOT_PASSWORD: amwjmh0327
     volumes:
       - /var/lib/minio:/data
     networks:
