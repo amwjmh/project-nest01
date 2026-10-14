@@ -8,7 +8,6 @@ db:
 redis:
   host: redis-container
   port: 6379
-  password: root
   db: 0
   keyPrefix: "nest:"
 email:
@@ -26,6 +25,6 @@ strategy:
 minio:
   endPoint: minio-container
   accessKey: admin
-  secretKey: amwjmh
+  secretKey: amwjmh0327
   port: 9000
   useSSL: false
