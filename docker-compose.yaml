@@ -1,5 +1,6 @@
 services:
   next-app:
+    container_name: next-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,6 +12,7 @@ services:
     networks:
       - common-network
   mysql-container:
+    container_name: mysql-container
     image: mysql
     ports:
       - 3306:3306 
@@ -22,6 +24,7 @@ services:
     networks:
       - common-network
   redis-container:
+    container_name: redis-container
     image: redis
     ports:
       - 6379:6379
