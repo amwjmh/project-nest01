@@ -1,8 +1,8 @@
 db:
-  host: localhost
+  host: 134.175.131.229
   port: 3306
   username: root
-  password: amwjmh
+  password: amwjmh0327
   database: recipe
   logging: true
 redis:

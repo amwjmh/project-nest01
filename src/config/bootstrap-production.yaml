@@ -2,7 +2,7 @@ db:
   host: mysql-container
   port: 3306
   username: root
-  password: amwjmh
+  password: amwjmh0327
   database: recipe
   logging: true
 redis:

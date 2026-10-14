@@ -2,12 +2,12 @@ db:
   host: 134.175.131.229
   port: 3306
   username: root
-  password: amwjmh
+  password: amwjmh0327
   database: recipe
   logging: true
 minio:
   endPoint: 134.175.131.229
   accessKey: admin
-  secretKey: amwjmh
+  secretKey: amwjmh0327
   port: 9000
   useSSL: false
