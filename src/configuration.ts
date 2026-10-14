@@ -9,7 +9,6 @@ const YAML_CONFIG_SUFFIX = "yaml";
 export default () => {
   let config: Record<string, any> = null;
   const configPath = path.resolve(__dirname, "config", `${YAML_CONFIG_FILENAME}.${YAML_CONFIG_SUFFIX}`);
-  console.log(configPath);
   if (existsSync(configPath)) {
     config = yaml.load(readFileSync(configPath, "utf-8"));
   }
@@ -17,5 +16,6 @@ export default () => {
   if (existsSync(evnConfigPath)) {
     merge(config, yaml.load(readFileSync(evnConfigPath, "utf-8")));
   }
+  console.log(config);
   return config;
 };
