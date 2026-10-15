@@ -25,6 +25,7 @@ strategy:
     callbackURL: http://localhost:3000/api/auth/callback
 minio:
   endPoint: localhost
+  publicEndPoint: localhost
   accessKey: admin
   secretKey: amwjmh0327
   port: 9000

@@ -51,7 +51,16 @@ export class AppConfigService {
       useSSL: this.get("minio.useSSL")
     };
   }
-  private get<T = string>(key: string): T {
+  get minioPublicConfig(): MinioClient.ClientOptions {
+    return {
+      endPoint: this.get("minio.publicEndPoint"),
+      accessKey: this.get("minio.accessKey"),
+      secretKey: this.get("minio.secretKey"),
+      port: this.get("minio.port"),
+      useSSL: this.get("minio.useSSL")
+    };
+  }
+  get<T = string>(key: string): T {
     const value = this.configService.get<T>(key);
      if (isNil(value)) {
        throw new Error(key + "环境变量未设置");

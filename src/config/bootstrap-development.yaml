@@ -7,6 +7,7 @@ db:
   logging: true
 minio:
   endPoint: 134.175.131.229
+  publicEndPoint: 134.175.131.229
   accessKey: admin
   secretKey: amwjmh0327
   port: 9000
