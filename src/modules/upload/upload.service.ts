@@ -49,7 +49,7 @@ export class UploadService {
       await this.minioClient.makeBucket(bucketName);
     }
     const fileName = `/${dayjs().format("YYYYMMDDHHmm")}/${crypto.randomUUID()}/${file.name}`;
-    await this.minioClient.putObject(bucketName, fileName, file.arrayBuffer());
+    // await this.minioClient.putObject(bucketName, fileName, file.arrayBuffer());
     return fileName;
   }
 }
